@@ -1,0 +1,426 @@
+http://47.98.227.139:9001
+
+//-----------------------------------------------------------------------------------------
+//num：1
+用户注册：
+{
+    请求方式（get）:http://47.98.227.139:9001/user/register?username=xx&password=xx
+    请求参数：{
+        username string （不能为空）
+        password string （6-18位，字母数字组合）
+    }
+    返回参数:{
+        status int       (0:失败；1：成功)
+        desc string      (描述)
+    }
+}
+
+//num: 2
+用户登录：
+{
+    请求方式（get）:http://47.98.227.139:9001/user/login?username=xx&password=xx&udid=xx
+    请求参数：{
+        username string （不能为空）
+        password string （6-18位，字母数字组合）
+        udid     string  (设备号)
+    }
+    返回参数:{
+        status int       (0:失败；1：成功)
+        desc string      (描述)
+        info interface { (成功则返回)
+            id          int
+            username    string
+            password    string
+            age         int
+            head_img    string
+            tel         int
+            is_m         int   (1,普通用户 2,图书管理员 ,3,权限管理员)
+            desc        string
+            token       string
+        }
+    }
+}
+//num: 3
+获取用户信息：
+{
+    请求方式（get）:http://47.98.227.139:9001/user/get?id=xx&token=xx
+    请求参数：{
+            id     string   (用户ID)
+            token  string   (验证当前登录用户)
+    }
+    返回参数:{
+            status int       (0:失败；1：成功)
+            desc string      (描述)
+            info interface { (成功则返回)
+                id          int
+                username    string
+                password    string
+                age         int
+                head_img    string
+                tel         int
+                is_m         int   (1,普通用户 2,图书管理员 ,3,权限管理员)
+                desc        string
+                token       string
+            }
+    }
+}
+//num: 4
+获取全部用户信息：
+{
+    请求方式（get）:http://47.98.227.139:9001/user/getall?token=xx
+    请求参数：{
+            token  string   (验证当前登录用户)
+    }
+    返回参数:{
+            status int       (0:失败；1：成功)
+            desc string      (描述)
+            info interface { (成功则返回)
+                id          int
+                username    string
+                password    string
+                age         int
+                head_img    string
+                tel         int
+                is_m         int   (1,普通用户 2,图书管理员 ,3,权限管理员)
+                desc        string
+                token       string
+            }
+    }
+}
+
+//num: 5
+修改用户信息：
+{
+    请求方式（post）:http://47.98.227.139:9001/user/change
+    请求参数：{
+            token  string   (验证当前登录用户)
+            id          int
+            username    string
+            age         int           》》非必须
+            tel         int
+            desc        string
+    }
+    返回参数:{
+            status int       (0:失败；1：成功)
+            desc string      (描述)
+            info interface { (成功则返回)
+                id          int
+                username    string
+                password    string
+                age         int
+                head_img    string
+                tel         int
+                is_m         int   (1,普通用户 2,图书管理员 ,3,权限管理员)
+                desc        string
+                token       string
+            }
+    }
+}
+
+//num: 6
+修改用户权限：
+{
+    请求方式（post）:http://47.98.227.139:9001/user/changea
+    请求参数：{
+            token       string   (验证当前登录用户)
+            id          int
+            is_m        int(1,普通用户 2,图书管理员 ,3,权限管理员)
+    }
+    返回参数:{
+            status int       (0:失败；1：成功)
+            desc string      (描述)
+            info interface { (成功则返回)
+                id          int
+                username    string
+                password    string
+                age         int
+                head_img    string
+                tel         int
+                is_m        int   (1,普通用户 2,图书管理员 ,3,权限管理员)
+                desc        string
+                token       string
+            }
+    }
+}
+
+//num: 7
+修改密码：
+{
+    请求方式（post）:http://47.98.227.139:9001/user/changepassword
+    请求参数：{
+            token         string   (验证当前登录用户)
+            username      string
+            password      string
+            newpassword1  string
+            newpassword2  string
+    }
+    返回参数:{
+            status int       (0:失败；1：成功)
+            desc string      (描述)
+            info interface { (成功则返回)
+                id          int
+                username    string
+                password    string
+                age         int
+                head_img    string
+                tel         int
+                is_m        int   (1,普通用户 2,图书管理员 ,3,权限管理员)
+                desc        string
+                token       string
+            }
+    }
+}
+
+//num: 8
+删除用户：
+{
+    请求方式（get）:http://47.98.227.139:9001/user/delete?username=xx&token=xx
+    请求参数：{
+            token  string   (验证当前登录用户)
+            username    string
+    }
+    返回参数:{
+            status int       (0:失败；1：成功)
+            desc string      (描述)
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+//num :9
+添加书籍：
+{
+    请求方式：(post):http://47.98.227.139:9001/book/add
+    请求参数：{
+        token     string     (验证当前登录用户)
+        num       int        (余量)
+        title     string     (书名)
+        price     float64    (单价）
+        author    string     (作者)
+        desc      string     (描述)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+                    id        int
+                    num       int        (余量)
+                    title     string     (书名)
+                    price     float64    (单价）
+                    author    string     (作者)
+                    src       string     (封面链接)
+                    desc      string     (描述)
+                }
+    }
+}
+
+//num :10
+获取单本书籍：
+{
+    请求方式：(get):http://47.98.227.139:9001/book/get?title=xx&token=xx
+    请求参数：{
+        token     string     (验证当前登录用户)
+        title     string     (书名)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+            id        int
+            num       int        (余量)
+            title     string     (书名)
+            price     float64    (单价）
+            author    string     (作者)
+            src       string     (封面链接)
+            desc      string     (描述)
+        }
+    }
+}
+//num :11
+获取书籍列表：
+{
+    请求方式：(get):http://47.98.227.139:9001/book/getAllB?token=xx
+    请求参数：{
+        token     string     (验证当前登录用户)
+        title     string     (书名)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info [(成功则返回)
+         {
+            id        int
+            num       int        (余量)
+            title     string     (书名)
+            price     float64    (单价）
+            author    string     (作者)
+            src       string     (封面链接)
+            desc      string     (描述)
+         },
+         {
+             id        int
+             num       int        (余量)
+             title     string     (书名)
+             price     float64    (单价）
+             author    string     (作者)
+             src       string     (封面链接)
+             desc      string     (描述)
+         }......
+        ]
+    }
+}
+
+//num :12
+修改书籍：
+{
+    请求方式：(post):http://47.98.227.139:9001/book/change
+    请求参数：{
+        token     string     (验证当前登录用户)
+        num       int        (余量)
+        title     string     (书名)
+        price     float64    (单价）
+        author    string     (作者)
+        desc      string     (描述)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+                id        int
+                num       int        (余量)
+                title     string     (书名)
+                price     float64    (单价）
+                author    string     (作者)
+                src       string     (封面链接)
+                desc      string     (描述)
+            }
+    }
+}
+
+//num :13
+删除书籍：
+{
+    请求方式：(get):http://47.98.227.139:9001/book/delete?title=xx&id=xx&token=xx
+    请求参数：{
+        token     string     (验证当前登录用户)
+        title     string     (书名)
+        id        int        (书籍id)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+    }
+}
+
+//-----------------------------------------------------------------------------------
+//num :14
+借书：
+{
+    请求方式：(post):http://47.98.227.139:9001/lend/lend
+    请求参数：{
+        token        string     (验证当前登录用户)
+        bookname     string     (书名)
+        username     string     (书籍id)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+              id             int        (id)
+              username       int        (借阅人)
+              bookname       string     (书名)
+              lend_time      float64    (借阅时间）
+              is_r           string     (状态：1 在借 ，2 已还)
+              return_time    string     (还书时间)
+        }
+    }
+}
+
+//num :15
+还书：
+{
+    请求方式：(post):http://47.98.227.139:9001/lend/return
+    请求参数：{
+        token        string     (验证当前登录用户)
+        bookname     string     (书名)
+        username     string     (用户名)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+              id             int        (id)
+              username       int        (借阅人)
+              bookname       string     (书名)
+              lend_time      float64    (借阅时间）
+              is_r           string     (状态：1 在借 ，2 已还)
+              return_time    string     (还书时间)
+        }
+    }
+}
+
+//num :16
+根据用户获取：
+{
+    请求方式：(get):http://47.98.227.139:9001/lend/getbyuser?username=xx&token=xx
+    请求参数：{
+        token        string     (验证当前登录用户)
+        username     string     (用户名)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+              id             int        (id)
+              username       int        (借阅人)
+              bookname       string     (书名)
+              lend_time      float64    (借阅时间）
+              is_r           string     (状态：1 在借 ，2 已还)
+              return_time    string     (还书时间)
+        }......
+    }
+}
+
+//num :17
+根据书籍获取：
+{
+    请求方式：(get):http://47.98.227.139:9001/lend/getbyuser?username=xx&token=xx
+    请求参数：{
+        token        string     (验证当前登录用户)
+        bookname     string     (书名)
+
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+              id             int        (id)
+              username       int        (借阅人)
+              bookname       string     (书名)
+              lend_time      float64    (借阅时间）
+              is_r           string     (状态：1 在借 ，2 已还)
+              return_time    string     (还书时间)
+        }......
+    }
+}
+
+//num :18
+根据用户获取：
+{
+    请求方式：(get):http://47.98.227.139:9001/lend/getbyuser?token=xx
+    请求参数：{
+        token        string     (验证当前登录用户)
+    }
+    返回参数：{
+        status    int        (0:失败；1：成功)
+        desc      string     (描述)
+        info {(成功则返回)
+              id             int        (id)
+              username       int        (借阅人)
+              bookname       string     (书名)
+              lend_time      float64    (借阅时间）
+              is_r           string     (状态：1 在借 ，2 已还)
+              return_time    string     (还书时间)
+        }......
+    }
+}
+
